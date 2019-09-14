@@ -39,6 +39,10 @@ class Regression_lineaire:
     def y_hat(self, x):
         return self.pente() * x + self.intercept()
 
+    def sigma_y_hat(self, x):
+        return sqrt(self.sigma_intercept()**2 + (self.sigma_pente() * x)**2 \
+                    + 2 * self.covariance_pente_intercept() * self.sigma_intercept() * (self.sigma_pente() * x))
+
     def R_squared(self):
         """
         This is the R^2 test, which measures how much of the variance in y is explained by the model f.
@@ -53,6 +57,9 @@ class Regression_lineaire:
         """
         return ((self.x - self.x.mean()) * (self.y - self.error_weighted_average(self.y, self.dy))).sum() / self.x.std() / self.y.std()
 
+    def chi_squared_reduced(self):
+        return (((y - a - b * x) / dy)**2).sum() / (x.size - 2)
+
     def covariance_pente_intercept(self):    
         return - 1 / ((1 / self.dy)**2).sum() * self.x.mean() / ((self.x**2).mean() - (self.x).mean()**2)
 
@@ -60,13 +67,6 @@ class Regression_lineaire:
     def error_weighted_average(x, sigma_x):
         return (x / sigma_x**2).sum() / (1 / sigma_x**2).sum()
 
-    def chi_squared_reduced(self):
-        return (((y - a - b * x) / dy)**2).sum() / (x.size - 2)
-
-    def sigma_y_hat(self, x):
-        return sqrt(self.sigma_intercept()**2 + (self.sigma_pente() * x)**2 \
-                    + 2 * self.covariance_pente_intercept() * self.sigma_intercept() * (self.sigma_pente() * x))
-        
 
 if __name__ == "__main__":
     # Small tests to make sure this class works well
