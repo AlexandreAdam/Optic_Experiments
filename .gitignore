@@ -2,3 +2,8 @@ build
 dist 
 __pycache__ 
 *.egg-info 
+*.aux  
+*.out  
+*.synctex  
+*.log  
+*.gz  

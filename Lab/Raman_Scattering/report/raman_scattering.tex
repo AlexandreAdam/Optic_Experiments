@@ -1,0 +1,113 @@
+\documentclass[10pt,letterpaper,twocolumn]{article}
+
+%2012-10-01 - Document préparé par David Lafrenière, pour le cours PHY3040.
+
+%Pour langue et caractères spéciaux
+\usepackage[french]{babel} 
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[utf8]{inputenc}
+
+%Package for math expression
+\usepackage{amsmath}
+\usepackage{amsthm,amstext,amsfonts,bm,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{gensymb}
+\usepackage{mathrsfs}
+\usepackage{physics}
+
+%Package for drawings
+%\usepackage{tikz}
+%\usetikzlibrary{calc,patterns,angles,quotes}
+%\usepackage[compat=1.1.0]{tikz-feynman}
+%\usetikzlibrary{3d}
+%\usetikzlibrary{decorations.pathreplacing}
+%\usepackage{lineno}
+
+%Package pour les symbole astronomiques
+%\usepackage{wasysym}
+
+\usepackage{hyperref}
+
+%Pour ajuster les marges
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm, columnsep=20pt]{geometry}
+
+% Pour la commande onecolabstract (résumé 1 pleine largeur)
+\usepackage{abstract}
+	\renewcommand{\abstractnamefont}{\normalfont\bfseries}
+	\renewcommand{\abstracttextfont}{\normalfont\itshape}
+
+% Pour les titres de section/sous-section
+\usepackage[compact]{titlesec}
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize}{\thesubsubsection}{1em}{}
+
+%Package for graphic expression
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{enumitem}
+
+%Shorthand for space and some math expressions
+\newcommand{\s}{\hspace{0.1cm}}
+\renewcommand{\Im}{\operatorname{\mathbb{I}m}}
+\renewcommand{\Re}{\operatorname{\mathbb{R}}}
+%Shorthand for partial differential
+\newcommand{\partialD}[2]{\frac{\partial #1}{\partial #2}}
+%Shorthand for \left(\right)
+\DeclarePairedDelimiter\autobracket{(}{)}
+\newcommand{\br}[1]{\autobracket*{#1}}
+
+\newcommand{\pyoutput}[2]{#2} % Simply output #2, use #1 as tag for python reader
+
+%Pour inclure des adresse web
+\usepackage{url}
+
+%Titre
+\title{\vspace{-10mm}\Large
+Diffusion Raman %%%***éditer cette ligne***
+\vspace{-4mm}}
+
+%Auteur
+\author{\large
+Alexandre Adam
+}
+\date{\vspace{-8mm}}
+
+\begin{document}
+
+\twocolumn[
+\maketitle
+\begin{onecolabstract} % 10 points
+
+\vspace{4mm} %
+\end{onecolabstract}
+]
+
+\section{Introduction}\label{intro} % 5 points
+
+
+\section{Théorie}\label{sec:theorie} % 10 points
+
+
+\section{Méthodologie}\label{sec:metho} % 15 points
+
+
+\section{Résultats}\label{sec:resultats} % 25 points
+
+\section{Discussion}\label{sec:discuss} % Share with results
+
+\section{Conclusion}\label{sec:conclusion} % 10 points
+
+\section{Extra} % 15 points
+
+
+\begin{thebibliography}{1}
+\bibitem{ref1} texte de la référence
+\end{thebibliography}
+
+\end{document}
