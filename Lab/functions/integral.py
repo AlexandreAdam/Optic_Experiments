@@ -5,7 +5,7 @@ import numpy as np
 def trapeze_integral(func, a, b, npt=1000):
     """
     Intègre numériquement l'intégrande donnée dans l'intervalle $x\in[a,b]$
-    avec la méthode des trapèzes avec un ordre $O(h^2)$. Le pas est définie
+    avec la méthode des trapèzes avec un ordre $O(h^2)$. Le pas est  définie
     selon npt qui peut prendre n'importe quelle valeure entière.
     Intégrande calcul les valeurs de la fonction selon la maille définit
     dans le programme.

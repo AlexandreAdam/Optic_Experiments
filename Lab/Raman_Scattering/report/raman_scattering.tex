@@ -8,6 +8,9 @@
 \usepackage{lmodern}
 \usepackage[utf8]{inputenc}
 
+\usepackage[backend=biber, style=numeric]{biblatex}
+\addbibresource{reference.bib}
+  
 %Package for math expression
 \usepackage{amsmath}
 \usepackage{amsthm,amstext,amsfonts,bm,amssymb,amsthm}
@@ -18,11 +21,11 @@
 \usepackage{physics}
 
 %Package for drawings
-%\usepackage{tikz}
-%\usetikzlibrary{calc,patterns,angles,quotes}
-%\usepackage[compat=1.1.0]{tikz-feynman}
+\usepackage{tikz}
+\usetikzlibrary{calc,patterns,angles,quotes}
+\usepackage[compat=1.1.0]{tikz-feynman}
 %\usetikzlibrary{3d}
-%\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{decorations.pathreplacing}
 %\usepackage{lineno}
 
 %Package pour les symbole astronomiques
@@ -78,6 +81,8 @@ Alexandre Adam
 }
 \date{\vspace{-8mm}}
 
+\captionsetup{labelfont=bf, format=plain, font=footnotesize}
+
 \begin{document}
 
 \twocolumn[
@@ -92,22 +97,54 @@ Alexandre Adam
 
 
 \section{Théorie}\label{sec:theorie} % 10 points
+La diffusion Raman spontanée est un processus de troisième ordre (3 vertex) dans la théorie des perturbations quantiques. La figure \ref{fig:FeynmanD} montre le diagramme de Feynman représentant une diffusion Raman. Le phonon peut être absorbé par l'électron, dans quel cas on parle de du champ \textit{anti-Stokes}; il peut aussi être émis par l'électron (champ \textit{Stokes}). Cette symétrie se reflète dans le spectre de Raman, où la fréquence de résonance des modes du semi-conducteur se situe à égale distance de la fréquence incidente $\omega_i$. \par
+Comme la paire électron-trou est virtuelle, \cite{Yu2010}
+
+\begin{figure}[H]
+	\centering
+	\begin{tikzpicture}
+		\tikzfeynmanset{
+				every vertex={black, dot}, small
+			}
+		\begin{feynman}
+			\vertex (a) {$\hbar \omega_i$};
+			\vertex [right=of a] (b);
+			\vertex [above right=of b] (c);
+			\vertex [below right=of c] (d);
+			\vertex [right=of d] (e) {$\hbar \omega_s$};
+			\vertex [above=of c] (p) {$\hbar \omega_p$};
+			
+			\diagram* {
+				(a) -- [photon] (b) -- [fermion, quarter left, edge label=$e^-$] (c) -- [fermion, quarter left, edge label=$e^-$] (d) -- [photon] (e);
+				(b) -- [charged scalar, edge label'=$\text{trou}$, half right] (d);
+				(c) -- [photon, edge label=$\text{phonon}$] (p);
+			};
+		\end{feynman}
+		\node [below=of a] (t) {temps};
+		\node [right=of t] (t1) {};
+		\draw [->] (t) -- (t1); 
+	\end{tikzpicture}
+	\caption{Diagramme de Feynman dépictant le processus de diffusion Raman. Un photon (\leadsto) incident d'énergie $\hbar \omega_i$ interagit avec le milieu pour créer un paire électron-trou. Ensuite, un phonon optique est absorbé (anti-Stokes) ou émis (Stokes) par l'électron, qui se recombine avec le trou pour former un nouveau photon d'énergie $\hbar \omega_s$. }
+	\label{fig:FeynmanD}
+\end{figure}
+
 
 
 \section{Méthodologie}\label{sec:metho} % 15 points
 
 
-\section{Résultats}\label{sec:resultats} % 25 points
+\section{Résultats et discussion}\label{sec:resultats} % 25 points
 
-\section{Discussion}\label{sec:discuss} % Share with results
 
 \section{Conclusion}\label{sec:conclusion} % 10 points
 
 \section{Extra} % 15 points
 
-
-\begin{thebibliography}{1}
-\bibitem{ref1} texte de la référence
-\end{thebibliography}
+\printbibliography
+%\bibliographystyle{abbvr} 
+%\bibliography{raman_scattering_bib}
+%\begin{thebibliography}{1}
+%\bibitem{ref1} texte de la référence
+%\end{thebibliography}
 
 \end{document}
