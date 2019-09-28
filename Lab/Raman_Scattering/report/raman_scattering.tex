@@ -8,7 +8,7 @@
 \usepackage{lmodern}
 \usepackage[utf8]{inputenc}
 
-\usepackage[backend=biber, style=numeric]{biblatex}
+\usepackage[backend=biber, style=nature]{biblatex}
 \addbibresource{reference.bib}
   
 %Package for math expression
@@ -97,8 +97,7 @@ Alexandre Adam
 
 
 \section{Théorie}\label{sec:theorie} % 10 points
-La diffusion Raman spontanée est un processus de troisième ordre (3 vertex) dans la théorie des perturbations quantiques. La figure \ref{fig:FeynmanD} montre le diagramme de Feynman représentant une diffusion Raman. Le phonon peut être absorbé par l'électron, dans quel cas on parle de du champ \textit{anti-Stokes}; il peut aussi être émis par l'électron (champ \textit{Stokes}). Cette symétrie se reflète dans le spectre de Raman, où la fréquence de résonance des modes du semi-conducteur se situe à égale distance de la fréquence incidente $\omega_i$. \par
-Comme la paire électron-trou est virtuelle, \cite{Yu2010}
+La diffusion Raman spontanée est un processus de troisième ordre (3 vertex) dans la théorie des perturbations quantiques\supercite{Yu2010}. La figure \ref{fig:FeynmanD} montre le diagramme de Feynman représentant une diffusion Raman. Le phonon peut être absorbé par l'électron, dans quel cas on parle du champ \textit{anti-Stokes}; il peut aussi être émis par l'électron (champ \textit{Stokes}). \par
 
 \begin{figure}[H]
 	\centering
@@ -124,9 +123,10 @@ Comme la paire électron-trou est virtuelle, \cite{Yu2010}
 		\node [right=of t] (t1) {};
 		\draw [->] (t) -- (t1); 
 	\end{tikzpicture}
-	\caption{Diagramme de Feynman dépictant le processus de diffusion Raman. Un photon (\leadsto) incident d'énergie $\hbar \omega_i$ interagit avec le milieu pour créer un paire électron-trou. Ensuite, un phonon optique est absorbé (anti-Stokes) ou émis (Stokes) par l'électron, qui se recombine avec le trou pour former un nouveau photon d'énergie $\hbar \omega_s$. }
+	\caption{Diagramme de Feynman dépictant le processus de diffusion Raman. Un photon (\leadsto) incident d'énergie $\hbar \omega_i$ interagit avec le milieu pour créer un paire électron-trou. Ensuite, un phonon optique est absorbé (anti-Stokes) ou émis (Stokes) par l'électron, qui se recombine avec le trou pour former un nouveau photon d'énergie $\hbar \omega_s = \hbar \omega_i \pm \hbar \omega_p$. }
 	\label{fig:FeynmanD}
 \end{figure}
+
 
 
 

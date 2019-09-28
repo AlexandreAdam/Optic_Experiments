@@ -12,3 +12,6 @@ __pycache__
 *.bcf  
 *.blg  
 *.bib 
+.pynb_checkpoints
+*.zip
+.ipynb_checkpoints

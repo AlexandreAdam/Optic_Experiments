@@ -1,1 +1,7 @@
-numpy==1.17.2 
+numpy 
+matplotlib  
+astropy  
+scipy  
+astropy 
+pandas  
+jupyterlab  
