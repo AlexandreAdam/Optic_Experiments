@@ -26,6 +26,7 @@
 \usepackage[compat=1.1.0]{tikz-feynman}
 %\usetikzlibrary{3d}
 \usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{automata,positioning}
 %\usepackage{lineno}
 
 %Package pour les symbole astronomiques
@@ -131,6 +132,49 @@ La diffusion Raman spontanée est un processus de troisième ordre (3 vertex) da
 
 
 \section{Méthodologie}\label{sec:metho} % 15 points
+
+\subsection{Montage}
+Pour obtenir les spectres Raman, on utilise le montage dépicté à la figure \ref{fig:montage}. Le faisceau laser est obtenu par l'excitation d'un plasma He-Ne avec une raie principale à $\lambda_L = 632.816\s nm$. Le plasma possède plusieurs raies secondaires dont la longueur d'onde se situe dans l'intervalle qui nous intéresse pour cette expérience ($640.9\s nm$ à $675.6\s nm$ pour le spectre Stokes en autre, qui correspond à un intervalle Raman $200\s cm^{-1}$ à $1000\s cm^{-1}$). Ces raies ont étés identifiés au début de l'expérience et prisent en compte dans l'analyse de données. \par
+
+Les photons diffus par l'effet Raman sont émis dans une direction aléatoire à partir de l'échantillon. La lentille $L_1$ capture ces photons ainsi que les photons du faisceau principal qui ont subis une diffusion Rayleigh. La lentille $L_2$ concentre les photons collectés vers une fente de largeur $\delta x$, où quelques photons ambiants peuvent à ce point entrer dans le spectromètre double. Celui-ci se charge de filtrer les photons de la raie principale et sélectionne les photons de longueur d'onde $\lambda$. Comme le signal est faible, on utilise un photo-multiplicateur GaAs refroidit à $-20^oC$ pour amplifier le signal qui arrive sous forme d'impulsion électrique dans le compteur de photon. 
+\begin{figure}[H]
+	\centering
+	\resizebox{!}{7cm}{
+	\begin{tikzpicture}
+		\node (O) at (0, 0) {};
+		\node[above right=1cm and 1cm of O, inner sep=0pt] (Laser) {};
+		\node[ above right=2cm and 2cm of Laser, inner sep=0pt] (Echantillon) {};
+		\node[below right=0.5cm and .5cm of Echantillon, inner sep=0pt] (LaserOut) {};
+		\node[below=1cm of Echantillon, inner sep=0pt] (Lentille1) {};
+		\node[below=2cm of Lentille1, inner sep=0pt] (Lentille2){};
+		\node[below=1cm of Lentille2, inner sep=0pt] (Fente) {};
+		\node[below=1.5cm of Fente, inner sep=0pt] (SBottom) {};
+		\node[below=.5cm of SBottom, inner sep=0pt] (PM) {};
+		\node[below left=.5cm and 1cm of PM, inner sep=0pt] (PMBottom) {};
+		\node[left=1cm of PMBottom, inner sep=0pt] (CPS) {};
+		\node[right=.75 of Lentille1] {$L_1$};
+		\node[right=.75 of Lentille2] {$L_2$};
+		
+		\draw[rotate around={45:(O)}] (O)++(-1.5cm, -.5cm) rectangle ++(3.17cm, 1cm) node[pos=.5, rotate around={45:(O)}] {Laser He-Ne};
+		\draw (Echantillon)++(-1.5, 1) rectangle ++(2, -1) node[pos=.5] {Échantillon};
+		\draw[<->] (Lentille1)++(-.5, 0) -- ++(1, 0);
+		\draw[<->] (Lentille2)++(-.5, 0) -- ++(1, 0);
+		\draw (Fente)++(2cm, 0) rectangle ++(-3cm, -1.5cm) node[pos=.5, text width=3cm, align=center] {Spectromètre \\ double};
+		\draw (PM)++(2cm, 0) rectangle ++(-3cm, -1cm) node[pos=.5, text width=3cm, align=center] {Photo- \\ multiplicateur};
+		\draw (CPS)++(0, 0.5cm) rectangle ++(-2cm, -1cm) node[pos=.5, text width=3cm, align=center] {Compteur \\ de photon};
+		
+		\draw (Laser) -- (Echantillon) -- (LaserOut);
+		\draw (Echantillon) -- ++(-.5, -1.075) -- ++(0, -2) -- (Fente);
+		\draw (Echantillon) -- ++(.5, -1.075) -- ++(0, -2) -- (Fente);
+		\draw (SBottom)++(0, .06) -- (PM)++(0, -.11);
+		\draw[->] (PMBottom) -- (CPS);
+	\end{tikzpicture}
+	}	
+	\caption{Montage de spectroscopie Raman}
+	\label{fig:montage}
+\end{figure}
+
+\subsection{Relation de dispersion}
 
 
 \section{Résultats et discussion}\label{sec:resultats} % 25 points
