@@ -1,0 +1,306 @@
+\documentclass[10pt,letterpaper,twocolumn]{article}
+
+%2012-10-01 - Document préparé par David Lafrenière, pour le cours PHY3040.
+
+%Pour langue et caractères spéciaux
+\usepackage[french]{babel} 
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[utf8]{inputenc}
+
+\usepackage[backend=biber, style=nature]{biblatex}
+\addbibresource{reference.bib}
+
+%Package for math expression
+\usepackage{amsmath}
+\usepackage{amsthm,amstext,amsfonts,bm,amssymb,amsthm}
+\usepackage{mathtools}
+\usepackage{bm}
+\usepackage{gensymb}
+\usepackage{mathrsfs}
+\usepackage{physics}
+
+%Package for drawings
+\usepackage{tikz}
+%\usepackage{pgfplots}
+\usetikzlibrary{calc,patterns,angles,quotes}
+\usepackage[compat=1.1.0]{tikz-feynman}
+\usetikzlibrary{3d}
+\usetikzlibrary{decorations.pathreplacing}
+\usepackage{lineno}
+
+%Package pour les symbole astronomiques
+%\usepackage{wasysym}
+
+\usepackage{hyperref}
+
+%Pour ajuster les marges
+\usepackage[top=2cm, bottom=2cm, left=2cm, right=2cm, columnsep=20pt]{geometry}
+
+% Pour la commande onecolabstract (résumé 1 pleine largeur)
+\usepackage{abstract}
+	\renewcommand{\abstractnamefont}{\normalfont\bfseries}
+	\renewcommand{\abstracttextfont}{\normalfont\itshape}
+
+% Pour les titres de section/sous-section
+\usepackage[compact]{titlesec}
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize}{\thesubsubsection}{1em}{}
+
+%Package for graphic expression
+\usepackage{graphicx}
+\usepackage{wrapfig}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage{enumitem}
+
+%Shorthand for space and some math expressions
+\newcommand{\s}{\hspace{0.1cm}}
+\renewcommand{\Im}{\operatorname{\mathbb{I}m}}
+\renewcommand{\Re}{\operatorname{\mathbb{R}}}
+%Shorthand for partial differential
+\newcommand{\partialD}[2]{\frac{\partial #1}{\partial #2}}
+%Shorthand for \left(\right)
+\DeclarePairedDelimiter\autobracket{(}{)}
+\newcommand{\br}[1]{\autobracket*{#1}}
+
+\newcommand{\pyoutput}[2]{#2} % Simply output #2, use #1 as tag for python reader
+
+%pour tableaux deluxetable
+%\usepackage{deluxetable}
+
+%Pour inclure des adresse web
+\usepackage{url}
+
+%Titre
+\title{\vspace{-10mm}\Large
+Cohérence de la lumière%%%***éditer cette ligne***
+\vspace{-4mm}}
+
+%Auteur
+\author{\large
+Alexandre Adam
+}
+\date{\vspace{-8mm}}
+
+\newcommand{\valve}[2]{%
+    \draw (#1-.5,#2) -- (#1+.5,#2) -- (#1-.5,#2-2) -- (#1+.5,#2-2) -- cycle;
+    \draw (#1,#2-1) -- (#1-.5,#2-1);
+    \draw (#1-.5,#2-1.45) rectangle (#1-1.25,#2-.65);
+}
+
+\begin{document}
+
+\twocolumn[
+\maketitle
+\begin{onecolabstract} % 10 points
+
+Ce laboratoire utilise la théorie de la cohérence et un interféromètre de Michelson pour mesurer la longueur d'onde de la raie verte de mercure ${\lambda = 0.55 \pm 0.02\s \text{nm}}$. On a mesurer la longueur d'onde moyenne du doublet du sodium à ${\lambda = 0.58 \pm 0.02 \s \mu\text{m}}$. La longueur de cohérence mesurée de ce faisceau ${l_c = 312 \pm 5 \mu \text{m}}$ nous a permis d'estimer la séparation entre le doublet, soit $1.10 \pm 0.07\s \text{nm}$.
+Nous avons aussi mesurer la longueur de cohérence de différents faisceaux de lumière blanche dans le visible, et estimé que l'équation la théorie d'un train d'onde de longueur spectrale finie prédit correctement le comportement de la longueur de cohérence en fonction de la longueur d'onde. 
+Finalement, nous avons mesurer l'indice de réfraction de l'air $(n - 1)\times 10^5 = 26.8 \pm 0.9$, de l'hélium $3.6 \pm 0.4$ et de l'hexafluorure de souffre  $85 \pm 6$. Les valeurs expérimentales pour l'air et l'hélium sont en bon accord avec les valeurs acceptées dans la littérature, alors que la valeur pour SF$_6$ excède de $\sim2\sigma$ la valeur attendue. 
+\vspace{4mm} %
+\end{onecolabstract}
+]
+
+\section{Introduction}\label{intro} % 5 points
+La théorie de la cohérence optique a des implications importantes en radio-astronomie pour reconstruire la taille réel d'une source lointaine comme une étoile (dont la taille angulaire est trop petite pour être visible directement par nos télescopes). L'application du théorème de van Cittert-Zernike permet de considérer qu'une étoile, une source spatialement étendue et hautement incohérente, apparaît toutefois comme une source cohérente à très large distance. Le théorème stipule que sous ces conditions, la transformée de Fourier de la fonction source est égale à la visibilité complexe $\nu$ observé par l'addition du champ $I$ observé par deux antennes radio séparés d'une certaine distance. \par
+La première application connu de ce théorème est dû à Albert Abraham Michelson, qui utilisa son interféromètre pour additionner directement deux champs sources séparés par la longueur de cohérence $l_c$ de l'étoile Betelgeuse pour mesurer sa taille géométrique ${d = 240\times 10^6\s \text{miles}}$\supercite{Michelson1921} (inaccessible aux méthodes contemporaines). \par
+Dans ce laboratoire, on propose de mesurer la longueur de cohérence et la larguer spectrale de plusieurs bandes de couleurs de la lumière blanche, d'une lampe de sodium et une lampe de mercure en utilisant l'interféromètre de Michelson. On se propose aussi de mesurer la longueur d'onde de la raie principale de la lampe de mercure et la longueur d'onde moyenne du doublet du sodium ainsi que la séparation entre les deux raies.\par
+On accomplit aussi la mesure de l'indice de réfraction de l'air, de l'hélium et de SF$_6$ en mesurant la différence de chemin optique d'un laser He-Ne ($\lambda = 632.8\s \text{nm}$) lorsqu'on retire le gaz à température/pression ambiante de l'enceinte situé dans un des bras de l'interféromètre. \par
+Finalement, on mesure l'indice de réfraction de l'hélium avec un laser GaN, $\lambda = 405\s \text{nm}$.
+
+\section{Théorie}\label{sec:theorie} % 10 points
+Le terme cohérence est utilisé pour décrire la corrélation de la phase d'un faisceau monochromatique\supercite{Pedrotti}. Dans un faisceau de radiation cohérent, la phase des différents rayons de lumière s'additionne, créant un patron d'interférence périodique sur une largeur qu'on nomme la longueur de cohérence. Un faisceau incohérent possède des rayons avec des phases aléatoires et le patron de lumière observé est uniforme (sans structure). \par
+Dans ce laboratoire, on considère des sources temporellement cohérentes (source monochromatique), soit un laser He-Ne, une lampe de mercure, de sodium et une source de lumière blanche qu'on fait passer par différents filtres passes-bandes. On analyse la cohérence \textit{spatiale} de ces sources à l'aide d'un interféromètre de Michelson. \par
+Le principe de l'expérience est le suivant: si la distance de chemin optique $\Delta$ entre les faisceaux des deux bras de l'interféromètre est plus petite que la longueur de cohérence $l_c$, alors un patron d'interférence devient bien visible; \textit{ç.-à-d.} que le contraste 
+	\begin{equation}\label{eq:nu}
+	\nu = \frac{I_{\max} - I_{\min}}{I_{\max} + I_{\min}}
+\end{equation}
+atteint $\nu \sim 1$. Le degré de cohérence est associé à ce contraste $\nu$. En augmentant $\Delta$, on réduit le degré de cohérence, et donc $\nu \rightarrow 0$. En principe, $\nu$ est une fonction périodique de $\Delta$ par le théorème de van Cittert-Zernike, qui stipule que la fonction $\nu(\Delta)$ devrait suivre 
+le patron de diffraction des deux fentes de Young\supercite{McCutchen1966}. On mesure la longueur de cohérence $l_c$ en laboratoire en mesurant la distance entre deux minimum de la visibilité $\nu$. \par
+La zone de cohérence du faisceau nous permet aussi de mesurer la longueur d'onde moyenne $\bar{\lambda}$ et sa largeur $\Delta \lambda$ en mesurant directement la distance entre $m$ maxima du patron d'interférence. La géométrie de l'interféromètre de Michelson nous permet de trouver que le nombre de franges $\Delta m$ dans un intervalle spatial $\Delta d$ est\supercite{Pedrotti}
+\begin{equation}\label{eq:deltaM}
+	\Delta m = \frac{2 \Delta d}{\lambda}
+\end{equation}\par
+La longueur de cohérence pour un faisceau quasi-monochromatique (composé d'une bande fréquence de larguer $\Delta \nu$) est définit par rapport au temps de vie $\tau_0$ d'un train d'onde. Ainsi,
+\begin{equation}\label{eq:lc}
+	l_c = c\tau_0 = \frac{c}{\Delta \nu} \simeq \frac{\lambda^2}{\Delta \lambda}
+\end{equation}
+où $\Delta \lambda$ est définit comme la largeur de la bande en longueur d'onde.\par
+Pour mesurer l'indice de réfraction d'un gaz, on doit mesurer la différence de chemin optique lorsque le gaz est présent dans une enceinte de longueur $L$, à comparer au moment où l'enceinte est vide ($n_{\text{vide}} = 1$). La différence de chemin optique ($\Delta d$ dans l'équation \ref{eq:deltaM}), est alors donné par
+\begin{equation}\label{eq:n}
+	\Delta d = \br{n - 1}L
+\end{equation}
+En comptant le nombre de franges lorsque $P \rightarrow 0$, on peut donc estimer $n$ en combinant \eqref{eq:n} et \eqref{eq:deltaM}. 
+\begin{equation}\label{eq:nExp}
+	n = 1 + \frac{\lambda \Delta m}{2 L}
+\end{equation}
+
+%Pour faire la correspondance, $\dfrac{\Delta - l_c}{l_c}$ joue le même rôle que $\dfrac{\sin \beta}{\beta}$ dans la fonction de l'intensité de la diffraction Fraunhofer à deux fentes:
+%\begin{equation}
+%	\nu(\delta) \propto \br{\dfrac{\Delta}{l_c}}^2
+%\end{equation}
+\par
+%Si $\Delta > l_c$, alors dépendamment de la source, la visibilité $V$ du patron d'interférence varie selon un patron d'interférence secondaire qui aurait pu être produit par deux franges séparée par une distance
+
+
+\section{Méthodologie}\label{sec:metho} % 15 points
+
+\subsection{Mesure de $l_c$}
+Pour mesurer la longueur de cohérence, on utilise l'interféromètre de Michelson dépicté à la Figure \ref{fig:montage1}. On contrôle la longueur du bras $L_2$ avec une vis micrométrique. La vis doit être calibrée en utilisant le laser He-Ne dont $\lambda$ est conne. Ainsi, on mesure un certains $\Delta m$, qu'on peut faire correspondre à $\Delta d$ en utilisant l'équation \eqref{eq:deltaM}.
+
+\begin{figure}[H]
+	\centering
+	\resizebox{\linewidth}{!}{
+	\begin{tikzpicture}
+		\draw (-0.5, 0.5) rectangle (1, -0.5) node[pos=.5] {Source};
+		\draw (1, 0) -- (1.5, 0);
+		\draw (1.5, -0.5) rectangle (4.5, 0.5) node[pos=.5] {Monochromateur};
+		\draw (4.5, 0) -- (7, 0);
+		\draw (5.5, 2.5) -- (5.5, 2);
+		\draw (5, 2) rectangle (6, 1);
+		\draw (4.8, 0.5) -- (4.8, -0.5);
+		\draw[->]  (3.5, -1.5) -- (4.8, -0.5);
+		\node at (3, -2) {Diffuseur};
+		\draw (5.5, 1) -- (5.5, -1.5);
+		\draw (5, 2.5) -- (6, 2.5);
+		\draw (7, 0.5) -- (7, -0.5);
+		\draw[<->] (7.5, 2.5) -- node[right] {$L_2$} (7.5, 0);
+		\draw[<->] (7, 3) -- node[above] {$L_1=$ constante} (5.5, 3);
+		\draw[draw=black,fill=lightgray] (5.75, 0.25) rectangle (5.25, -0.25);
+		\draw (5.75, 0.25) -- (5.25, -0.25);
+		\draw (4.5, -1.5) rectangle (6.5, -2.5) node[pos=.5] {Patron};
+		
+		\draw (-0.5, 3.5) rectangle (1.5, 1) node[pos=.75] {He} node[pos=.5] {Air} node[pos=.25] {SF$_6$};
+		\draw (2.5, 3.5) rectangle (4, 2.5) node[pos=.5] {Pompe};
+		\begin{scope}[scale=0.3, rotate=90]
+			\valve{5}{-10}
+		\end{scope}
+		\draw (1.5, 1.5) -- (3, 1.5);
+		\draw (3.6, 1.5) -- (5, 1.5);
+		\draw (3.3, 2.5) -- (3.3, 1.5);
+ 	\end{tikzpicture}
+ 	}
+	\caption{Montage pour mesurer la longueur de cohérence $l_c$ d'un faisceau monochromatique ou quasi-monochromatique. On fait passer le faisceau dans un filtre passe-bande (monochromateur) si nécessaire. L'interferomètre de Michelson sépare le faisceau en deux avec un miroir semi-réfléchissant (boîte grise). On variant la longueur du bras $L_2$, on change la différence de chemin optique $\Delta$, et donc le patron observé. Un système de pompe permet d'injecter du gaz dans la chambre à air dans le bras $L_2$, pour mesurer l'indice de réfraction des différents gaz.}
+	\label{fig:montage1}
+\end{figure}
+Après la calibration, on peut mesurer la longueur de cohérence en cherchant deux minimums de la fonction de contraste $\nu(\Delta)$ (équation \eqref{eq:nu}). La distance est mesurée directement à partir du déplacement du miroir entre les deux minimums.\par
+
+Ce montage permet aussi de mesurer la longueur d'onde de la raie principale de la lampe de mercure et $\bar{\lambda}$ de la lampe de sodium. En s'assurant que $\Delta < l_c$, on tourne la vis micrométrique jusqu'à ce que $\Delta m = 100$ franges passent devant une position de référence dans l'image du patron. L'équation \eqref{eq:deltaM} nous permet alors d'obtenir $\bar{\lambda}$. \par
+$\Delta \lambda$ est dérivé des résultats précédents pour $\bar{\lambda}$ et $l_c$.
+\subsection{Mesure de l'indice de réfraction}
+Pour cette portion de l'expérience, on utilise la chambre à air et le système de pompe (voir montage de la Figure \ref{fig:montage1}). On remplit la chambre du gaz choisit, puis on laisse la pompe vider tranquillement la chambre du gaz alors qu'on compte le nombre de frange $\Delta m$. 
+
+\section{Résultats et discussion }\label{sec:resultats} % 25 points
+
+\subsection{Calibration}
+Pour la calibration, on utilise le laser He-Ne, avec $\lambda = 632.8\s\text{nm}$. On estime, en mesurant un déplacement de $\Delta m = 100$ franges pour trois mesures, que chaque graduations de la vis correspondent à un déplacement de $2\s \mu\text{m}$ du miroir. Ainsi, notre précision sur $\Delta d$ est environ $\delta d \simeq 1\s \mu\text{m}$, soit la moitié de la plus petite graduation. 
+
+
+\subsection{Longueur d'onde de la raie verte du mercure}
+Pour mesurer la longueur d'onde de la raie verte du mercure, on déplace le miroir primaire du bras $L_2$ pour obtenir $\Delta m = 110$ franges. En prenant en note le déplacement $\Delta d$ correspondant, on trouve $0.55 \pm 0.02\s \text{nm}$. La table \ref{tab:Hg} résume nos résultats, et montre que la longueur est en bon accord avec la valeur attendue considérant les incertitudes sur nos mesures. 
+\begin{table}[H]
+	\centering
+	\caption{Valeur moyenne des mesures pour mesurer $\lambda_{\text{Hg}} $. }
+	\label{tab:Hg}
+	\begin{tabular}{|c|c|c|}
+	  \hline
+	      & Exp. & Th. \\\hline
+		$\Delta m$ & 110 & - \\\hline
+		$\Delta d$ [$\mu$m] & $15.5\pm 1$ & -  \\\hline
+		$\lambda$ [$\mu$m]   &  $0.55 \pm 0.02$ & $0.5461$ \\\hline
+%		$\Delta \lambda$ [nm] & $1.10 \pm 0.07$ & $0.5974$ \\\hline
+%		$l_c$ [mm]   & $0.50 \pm 0.02$ & $297.91$ \\\hline
+	\end{tabular}
+\end{table}
+
+\subsection{Longueur d'onde moyenne du doublet du sodium}
+La même procédure nous permet de déterminer que la longueur d'onde moyenne du doublet de sodium est ${\bar{\lambda} = 0.58 \pm 0.02 \s \mu\text{m}}$. La valeur attendue (voir Table \ref{tab:Na}) se trouve dans l'intervalle d'incertitude.
+\begin{table}[H]
+	\centering
+	\caption{Mesure relatives à $\bar{\lambda}_{\text{Na}} $. }
+	\label{tab:Na}
+	\begin{tabular}{|c|c|c|}
+	  \hline
+	      & Exp. & Th. \\\hline
+		$\Delta m$ & 100 & - \\\hline
+		$\Delta d$ [$\mu$m] & $15\pm1$ & -  \\\hline
+		$\bar{\lambda}$ [$\mu$m]   &  $0.58 \pm 0.02$ & $0.5893$ \\\hline
+		$\Delta \lambda$ [nm] & $1.10 \pm 0.07$ & $0.5974$ \\\hline
+		$l_c$ [$\mu$m]   & $312 \pm 5$ & $297.91$ \\\hline
+	\end{tabular}
+\end{table}
+La présence du doublet nous permet de mesurer la séparation après avoir mesurer expérimentalement la longueur de cohérence $l_c$ par la méthode décrite dans la section \ref{sec:metho}. 
+La valeur de la longueur de cohérence expérimentale est plus grande que la valeur théorique par $\sim 3\sigma$. Une erreur systématique est présente sur cette mesure, soit le jugement de l'expérimentateur au moment de mesurer ce qui constitue un minimum approprié pour la fonction $\nu(\Delta)$. Pour essayer de palier à ce fait, nous avons répéter la mesure avec deux expérimentateurs différents et pris la valeur de $l_c$ pour laquelle les deux expérimentateurs étaient en accord. Nous avons augmenter l'incertitude de $1\s \mu\text{m}$ à $5\s \mu\text{m}$ pour refléter cette erreur. Malgré cela, l'estimation de $\Delta \lambda$ reste difficile puisque l'erreur sur ce nombre est dominé par l'incertitude $\delta d$.\par
+La valeur obtenu pour $\Delta \lambda$ est donc $86\% $ plus élevé que la valeur attendue. 
+%On estime que l'erreur sur les mesures de $\bar{\lambda}$ et $l_c$ ont conspirées, et une estimation de $\Delta \lambda$ sera toujours difficile par la méthode utilisée dans ce laboratoire à cause des erreurs aléatoires et systématiques qui ruinent d'avance le résultat. 
+
+\subsection{$l_c$ et $\Delta \lambda$ des faisceaux de lumière blanche}
+Pour la lumière blanche, on utilise une roulette filtre passe bande (monochromateur dans le montage, Figure \ref{fig:montage1}) d'une largeur spectrale de $10\s \text{nm}$. On vérifie la largeur spectrale par la mesure expérimentale de $l_c$ en utilisant l'équation \eqref{eq:lc} puisqu'on connaît la longueur d'onde centrale des filtres. On utilise $6$ filtres, allant d'une longueur d'onde moyenne de $450\s \text{nm}$ à $700\s \text{nm}$. Nous n'avons pas pu utiliser le filtre $400\s \text{nm}$ puisque l'intensité était trop faible pour accomplir la mesure. Les résultats sont compilés dans la tables \ref{tab:Blanche}. 
+\begin{table}[H]
+	\centering
+	\caption{Longueurs de cohérence et largeur spectrale des faisceaux de lumière blanche.}
+	\label{tab:Blanche}
+	\begin{tabular}{|c|c|c|}
+		\hline
+		$\bar{\lambda}$ [nm] & $l_c$ [$\mu$m] & $\Delta \lambda$  \\\hline
+		450 &   $17 \pm 5$ & $11 \pm 3$ \\\hline
+		500 &   $19 \pm 5$ & $12 \pm 3$ \\\hline
+		550  &  $27 \pm 5$  & $11 \pm 2$ \\\hline
+		600  &  $31 \pm 5$  & $11 \pm 2$ \\\hline
+		650  & 	$33 \pm 5$  & $12 \pm 2$ \\\hline
+		700 & 	$33 \pm 5$  & $15 \pm 2$ \\\hline
+	\end{tabular}
+\end{table}
+La largeur spectrale est en bon accord avec la valeur du manufacturier, quoique systématiquement plus élevé ($11\s \text{nm}$ en moyenne). On remarque aussi que la longueur de cohérence est un ordre de grandeur plus petite que la valeur mesurée pour la lampe de sodium. La longueur de cohérence augmente en fonction de la longueur d'onde, tels qu'attendu par l'équation \eqref{eq:lc} lorsqu'on augmente la longueur d'onde. 
+%Ceci reflète directement le fait que $\Delta \lambda$ est $10$ fois plus grand pour la lumière blanche, et donc on conclut que c'est la largeur de spectre qui paramétrise la longueur de cohérence spatiale. Cette observation est en accord avec la théorie développée, soit que la cohérence est directement reliée à la larguer spectrale d'un train d'onde. 
+
+\subsection{Indice de réfraction}
+Pour mesurer l'indice de réfraction, on suit la méthode discutée à la section \ref{sec:metho}. Pour estimer l'erreur sur le nombre de franges, on a répéter la mesure trois fois pour chaque gaz et observer la variation de $\Delta m$. On a remarque que pour l'air et l'hélium, le compte variait peu. Or pour SF$_6$, le compte variait beaucoup plus et il était difficile d'estimer sa valeur. On estime l'erreur pour RF$_6$ comme étant $\sqrt{\Delta m}$, soit l'erreur tirée d'une distribution de Poisson. L'idée est de tenter de refléter les erreurs aléatoires qui peuvent survenir dans le compte d'un grand nombre de franges. 
+%La longueur de la chambre a air est $L = 7.3 \pm 0.1\s \text{cm}$. Pour estimer l'erreur sur $\Delta m$, on utilise $\sqrt{\Delta m}$ comme erreur de mesure (soit l'erreur tirée d'une distribution de Poisson). Cette estimation de l'incertitude tente de prendre en compte les erreurs aléatoires et reflète les fluctuations qu'on a observé dans nos résultats lorsqu'on a répéter la mesure plusieurs fois. 
+\begin{table}[H]
+	\centering
+	\caption{Indices de réfraction $(n - 1)\times 10^5$}
+	\begin{tabular}{|c|c|c|c|}
+		\hline
+		  &  (Exp.) & (Th.)\supercite{rii} & $\Delta m$ \\\hline
+		  Air & $26.8 \pm 0.9$ &   $27.2$  &   $61 \pm 2$   \\\hline
+		  He &  $3.6 \pm 0.4$   &   $3.488$ &    $8 \pm 1$   \\\hline
+		  SF$_6$  &  $85 \pm 6$ & $72.76$    &    $195 \pm 14$  \\\hline
+	\end{tabular}
+\end{table}
+Les mesures de l'indice de réfraction de l'air et de l'hélium sont en bon accord avec les valeurs dans la littérature. Toutefois, l'indice de réfraction obtenu pour SF$_6$ est $2\sigma$ plus élevé que la valeur accepté dans la littérature. 
+
+\subsection{Dispersion de l'indice de réfraction de l'hélium}
+On utilise un laser GaN de longueur d'onde $\lambda = 405\s \text{nm}$ pour mesurer l'indice de réfraction de l'hélium. Selon la littérature\supercite{rii}, la relation de dispersion prend la forme
+\begin{equation}
+	n - 1 = \frac{0.014744297}{429.29740 - \lambda^{-2}}
+\end{equation}
+Ainsi, on s'attend à ce que l'indice de réfraction dépendent de la longueur d'onde. Or, la valeur obtenue expérimentalement à varier beaucoup plus qu'attendu, passant de $3.6 \pm 0.4$ à $4.2 \pm 0.3$. 
+\begin{table}[H]
+	\centering
+	\caption{Indices de réfraction de l'hélium à $\lambda = 405\s \text{nm}$,  $(n - 1)\times 10^5$ }
+	\begin{tabular}{|c|c|c|}
+		\hline
+		  (Exp.) & (Th.)\supercite{rii} & $\Delta m$ \\\hline
+		   $4.2 \pm 0.3$ &   $3.5116$  &   $15 \pm 1$   \\\hline
+	\end{tabular}
+\end{table}
+L'expérience a été répétée pour l'air et SF$_6$, pour lesquelles on ne trouve aucune différence notable avec les valeurs obtenues précédemment. 
+
+%L'erreur sur la mesure est de l'ordre de $40\s \mu\text{m}$ (soit un dixième d'une calibration de la vis micrométrique). 
+%On a compter 100 franges ($\Delta m = 100$). 
+%Longueur d'onde de la raie verte de la lampe de mercure $\lambda_{\text{Hg}} = 550 \pm 5\s  \text{nm} $ (théorie $\lambda_{Hg} = 546.1\s \text{nm}$) avec un déplacement correspondant du miroir de $30.2 \pm 0.2\s \mu\text{m}$. Longueur d'onde de cohérence $506 \pm 4\s \mu \text{m}$. \\
+%
+%La longueur d'onde moyenne du doublet de la lampe de sodium est $585 \pm 4\s \text{nm}$. La longueur d'onde moyenne théorique est $589.3\s \text{nm}$, avec une séparation théorique de $0.597\s \text{nm}$. La longueur de cohérence théorique est $l_c = 297.9\s \mu \text{m}$., La séparation entre le doublet expérimental est $\Delta \lambda = 1.098 \pm 0.007\s \text{nm}$
+
+
+\section{Conclusion}\label{sec:conclusion} % 10 points
+En utilisant la théorie de la cohérence et un interféromètre de Michelson, on a mesuré la longueur d'onde de la raie verte de mercure comme étant ${0.55 \pm 0.02\s \text{nm}}$. On a mesurer la longueur d'onde moyenne du doublet du sodium à ${0.58 \pm 0.02 \s \mu\text{m}}$. La longueur de cohérence mesurée de ce faisceau $l_c = 312 \pm 5\s \mu \text{m}$ nous a permis d'estimer la séparation entre le doublet, soit $1.10 \pm 0.07\s \text{nm}$. \par
+Nous avons mesuré la longueur de cohérence de différents faisceaux de lumière blanche dans le visible, et estimé que l'équation \eqref{eq:lc} tiré de la théorie d'un train d'onde de longueur spectrale finie prédit correctement le comportement de la longueur de cohérence en fonction de la longueur d'onde. \par
+Finalement, nous avons mesurer l'indice de réfraction de l'air $(n - 1)\times 10^5 = 26.8 \pm 0.9$, de l'hélium $3.6 \pm 0.4$ et de l'hexafluorure de souffre  $85 \pm 6$. Les valeurs expérimentales pour l'air et l'hélium sont en bon accord avec les valeurs acceptées dans la littérature. L'indice de réfraction de l'hélium est mesuré à $4.2 \pm 0.3$ avec le laser GaN $\lambda = 405\s \text{nm}$. 
+\printbibliography
+
+\end{document}
